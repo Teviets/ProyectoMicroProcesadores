@@ -156,7 +156,14 @@ void manejoEquipos(){
 		cin >> opcionME;
 		
 		switch (opcionME){
-			
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
 		}
 	}
 }
@@ -165,6 +172,17 @@ void manejoJugadores(){
 	while (0 < opcionMJ < 5){
 		impresionMenuJugadores();
 		cin >> opcionMJ;
+		
+		switch (opcionMJ){
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+		}
 	}
 }
 
