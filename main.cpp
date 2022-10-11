@@ -31,11 +31,12 @@ int opcion, opcionMJ, opcionME;
  * [0] Nombre del equipo, [1] Presupuesto, [2] Limite Salarial
  */
 
-string arrayEquipos [4][3]= {
-	{"Barcelona","0","0"},
-	{"Real Madrid","0","0"},
-	{"Atletico de Madrid","0","0"},
-	{"Sevilla","0","0"},
+string arrayEquipos [4][4]=  {
+    {"Real Madrid","683000000","769000000","722000000" },
+    {"Fc Barcelona","656000000 ","631000000","275000000"},
+    {"Atletico de Madrid","341000000","540000000","87000000"},
+    {"Sevilla FC","199000000","242000000","22000000"}
+
 };
 
 /**
@@ -150,12 +151,64 @@ void impresionMenuEquipos(){
 	cout << "5. Regresar\n";
 }
 
+void mostrarJugadoresXEquipo(){
+	for (int i = 0; i < sizeof(arrayEquipos); i++){
+		cout << arrayEquipos[i][0] << ": \n";
+		switch (i){
+			case 0:
+				cout << "-----------------Fc Barcelona----------------\n";
+				for (int jg = 0; jg<sizeof(arrayBarcelona); jg++){
+					cout << jg << ".- " << arrayBarcelona[jg][0] << "\n  -Valor de Mercado: €" << arrayBarcelona[jg][1] << "\n  -Salario anual: €" << arrayBarcelona[jg][2] << "\n";
+				}
+				break;
+			case 1:
+				cout << "-----------------Real Madrid FC----------------\n";
+				for (int jg = 0; jg<sizeof(arrayRealMadrid); jg++){
+					cout << jg << ".- " << arrayRealMadrid[jg][0] << "\n  -Valor de Mercado: €" << arrayRealMadrid[jg][1] << "\n  -Salario anual: €" << arrayRealMadrid[jg][2] << "\n";
+				}
+				break;
+			case 2:
+				cout << "-----------------Atletico de Madrid----------------";
+				for (int jg = 0; jg<sizeof(arrayAtleticoMadrid); jg++){
+					cout << jg << ".- " << arrayAtleticoMadrid[jg][0] << "\n  -Valor de Mercado: €" << arrayAtleticoMadrid[jg][1] << "\n  -Salario anual: €" << arrayAtleticoMadrid[jg][2] << "\n";
+				}
+				break;
+			case 3:
+				cout << "-----------------Sevilla FC----------------";
+				for (int jg = 0; jg<sizeof(arraySevilla); jg++){
+					cout << jg << ".- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: €" << arraySevilla[jg][1] << "\n  -Salario anual: €" << arraySevilla[jg][2] << "\n";
+				}
+				break;
+		}
+	}
+}
+
+void todosdNuestroPlayes(){
+	for (int jg = 0; jg<sizeof(arrayBarcelona); jg++){
+		cout << "- " << arrayBarcelona[jg][0] << "\n  -Valor de Mercado: €" << arrayBarcelona[jg][1] << "\n  -Salario anual: €" << arrayBarcelona[jg][2];
+	}
+	for (int jg = 0; jg<sizeof(arrayRealMadrid); jg++){
+		cout << "- " << arrayRealMadrid[jg][0] << "\n  -Valor de Mercado: €" << arrayRealMadrid[jg][1] << "\n  -Salario anual: €" << arrayRealMadrid[jg][2];
+	}
+	for (int jg = 0; jg<sizeof(arrayAtleticoMadrid); jg++){
+		cout <<"- " << arrayAtleticoMadrid[jg][0] << "\n  -Valor de Mercado: €" << arrayAtleticoMadrid[jg][1] << "\n  -Salario anual: €" << arrayAtleticoMadrid[jg][2];
+	}
+	for (int jg = 0; jg<sizeof(arraySevilla); jg++){
+		cout << "- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: €" << arraySevilla[jg][1] << "\n  -Salario anual: €" << arraySevilla[jg][2];
+	}
+}
+
+void ingresoJugador(){
+	cout << "Ingrese el equipo al que desea agregarle un jugador\n";
+	
+}
+
 void manejoEquipos(){
 	while(0 < opcionME < 5){
 		impresionMenuEquipos();
 		cin >> opcionME;
 		
-		switch (opcionME){
+		switch ((int)opcionME){
 			case 1:
 				break;
 			case 2:
@@ -173,14 +226,16 @@ void manejoJugadores(){
 		impresionMenuJugadores();
 		cin >> opcionMJ;
 		
-		switch (opcionMJ){
+		switch ((int)opcionMJ){
 			case 1:
 				break;
 			case 2:
 				break;
 			case 3:
+				todosdNuestroPlayes();
 				break;
 			case 4:
+				mostrarJugadoresXEquipo();
 				break;
 		}
 	}
@@ -189,17 +244,22 @@ void manejoJugadores(){
 
 int main(int nNumberofArgs, char* pszArgs[]) {
 	
+	bool flag = true;
 	// Ciclo para manejo general del programa
-	while (0 < opcion < 3){
+	while (flag){
 		// Se imprime el primer menu
 		impresionMenuInicial();
 		cin >> opcion;
 		
-		switch (opcion){
+		switch ((int)opcion){
 			case 1:
-				
+				manejoEquipos();
 				break;
 			case 2:
+				manejoJugadores();
+				break;
+			case 3:
+				flag = false;
 				break;
 		}
 	}
