@@ -1,7 +1,7 @@
 /**
  * Universidad del Valle de Guatemala
- * Laboratorio 4 parte 2
- * Programa realizado el 06/09/2022
+ * Proyecto 2
+ * Programa realizado el 10/10/2022
  * Integrantes:
  * Diego Valdez - 21328
  * Manuel Rodas - 21509
@@ -20,19 +20,23 @@
 
 using namespace std;     // Usar estandar de c++ para flujos de IN y OUT
 
+// Variables Globales
+int numThreads;
+int opcion, opcionMJ, opcionME;
+
 /**
  * Los arrays de dos dimensiones están construídos de la siguiente manera:
  * En la primera dimensión se encuentran los arrays cada uno de los equipos.
  * En el segundo array se encuentran la informacion de cada equipo:
- * [0] Nombre del equipo, [1] Presupuesto, [2] Limite Salarial
+ * [0] Nombre del equipo, [1] Limite salarial, [2] Ingresos, [3] Presupuesto 
  */
 
-string arrayEquipos [4][3]=
+string arrayEquipos [4][4]=
         {
-                {"Barcelona","0","0"},
-                {"Real Madrid","0","0"},
-                {"Atletico de Madrid","0","0"},
-                {"Sevilla","0","0"},
+                {"Real Madrid","683000000","769000000","722000000", },
+                {"Fc Barcelona","656000000 ","631000000","275000000"},
+                {"Atletico de Madrid","341000000","540000000","87000000"},
+                {"Sevilla FC","199000000","242000000","22000000"}
         };
 
 /**
@@ -121,30 +125,173 @@ string arraySevilla [15][3]=
                 {"Rafa Mir","16000000","2000000"}
         };
 
+/**
+* Impresion para escoger manejo de equipos o jugadores
+*/
+void impresionMenuInicial(){
+	cout << "1. Edicion de equipos\n";
+	cout << "2. Edicion de jugadores\n";
+	cout << "3. Salir\n";
+}
 
-int main(int nNumberofArgs, char* pszArgs[]){
+/**
+* Impresion menu Jugadores
+*/
+void impresionMenuJugadores() {
+	cout << "1. Ingresar un Jugador nuevo\n";
+	cout << "2. Mover Jugador existente\n";
+	cout << "3. Ver todos los jugadores\n";
+	cout << "4. Jugadores por equipo\n";
+	cout << "5. Regresar\n";
+}
+/**
+* Impresion Menu equipos 
+*/
+void impresionMenuEquipos(){
+	cout << "1. Ver equipos disponibles\n";
+	cout << "2. Cambiar limite salarial\n";
+	cout << "3. Verificacion de limite salarial restante\n";
+	cout << "4. Cambiar presupuesto de fichaje\n";
+	cout << "5. Regresar\n";
+}
 
-    string nameEquipo;
-    string nameJugador;
-    int presupuesto;
-    int salarioJugador;
-    int salario;
-    int valJugador;
-    int limSalarial; 
+void mostrarEquipos(){
+        cout << ".- " << arrayEquipos[0][0] << "\n";
+        cout << ".- " << arrayEquipos[1][0] << "\n";
+        cout << ".- " << arrayEquipos[2][0] << "\n";
+        cout << ".- " << arrayEquipos[3][0] << "\n";
+}
 
-    cout << "Ingrese el nombre del jugador: " <<  endl;
-    cin >> nameJugador;
 
-    cout << "Ingrese el salario del jugador: " <<  endl;
-    cin >> salarioJugador;
+void mostrarJugadoresXEquipo(){
+	cout << "-----------------Fc Barcelona----------------\n";
+	for (int jg = 0; jg<16; jg++){
+		cout << jg << ".- " << arrayBarcelona[jg][0] << "\n  -Valor de Mercado: €" << arrayBarcelona[jg][1] << "\n  -Salario anual: €" << arrayBarcelona[jg][2] << "\n";
+	}
 
-    cout << "Ingrese el nuevo presupuesto: " <<  endl;
-    cin >> presupuesto;
+        cout << "-----------------Real Madrid FC----------------\n";
+	for (int jg = 0; jg<16; jg++){
+		cout << jg << ".- " << arrayRealMadrid[jg][0] << "\n  -Valor de Mercado: €" << arrayRealMadrid[jg][1] << "\n  -Salario anual: €" << arrayRealMadrid[jg][2] << "\n";
+	}
 
-    cout << "Ingrese el nuevo salario del jugador: " <<  endl;
-    cin >> salario;
+        cout << "-----------------Atletico de Madrid----------------\n";
+        for (int jg = 0; jg<16; jg++){
+                cout << jg << ".- " << arrayAtleticoMadrid[jg][0] << "\n  -Valor de Mercado: €" << arrayAtleticoMadrid[jg][1] << "\n  -Salario anual: €" << arrayAtleticoMadrid[jg][2] << "\n";
+        }
 
-    cout << "Ingrese el nombre del equipo: " <<  endl;
-    cin >> nameEquipo;
+        cout << "-----------------Sevilla FC----------------\n";
+        for (int jg = 0; jg<15; jg++){
+                cout << jg << ".- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: €" << arraySevilla[jg][1] << "\n  -Salario anual: €" << arraySevilla[jg][2] << "\n";
+        }
+}
+
+void todosdNuestroPlayes(){
+	for (int jg = 0; jg<16; jg++){
+		cout << "- " << arrayBarcelona[jg][0] << "\n  -Valor de Mercado: €" << arrayBarcelona[jg][1] << "\n  -Salario anual: €" << arrayBarcelona[jg][2] << "\n";
+	}
+	for (int jg = 0; jg<16; jg++){
+		cout << "- " << arrayRealMadrid[jg][0] << "\n  -Valor de Mercado: €" << arrayRealMadrid[jg][1] << "\n  -Salario anual: €" << arrayRealMadrid[jg][2] << "\n";
+	}
+	for (int jg = 0; jg<16; jg++){
+		cout <<"- " << arrayAtleticoMadrid[jg][0] << "\n  -Valor de Mercado: €" << arrayAtleticoMadrid[jg][1] << "\n  -Salario anual: €" << arrayAtleticoMadrid[jg][2] << "\n";
+	}
+	for (int jg = 0; jg<15; jg++){
+		cout << "- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: €" << arraySevilla[jg][1] << "\n  -Salario anual: €" << arraySevilla[jg][2] << "\n";
+	}
+}
+
+void ingresoJugador(){
+	cout << "Ingrese el equipo al que desea agregarle un jugador\n";
+	
+}
+
+void manejoEquipos(){
+	while(0 < opcionME < 5){
+		impresionMenuEquipos();
+		cin >> opcionME;
+		
+		switch ((int)opcionME){
+			case 1:
+                                mostrarEquipos();
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+		}
+	}
+}
+
+void manejoJugadores(){
+	while (0 < opcionMJ < 5){
+		impresionMenuJugadores();
+		cin >> opcionMJ;
+		
+		switch ((int)opcionMJ){
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				todosdNuestroPlayes();
+				break;
+			case 4:
+				mostrarJugadoresXEquipo();
+				break;
+		}
+	}
+}
+
+
+int main(int nNumberofArgs, char* pszArgs[]) {
+	
+	bool flag = true;
+	// Ciclo para manejo general del programa
+	while (flag){
+		// Se imprime el primer menu
+		impresionMenuInicial();
+		cin >> opcion;
+		
+		switch ((int)opcion){
+			case 1:
+				manejoEquipos();
+				break;
+			case 2:
+				manejoJugadores();
+				break;
+			case 3:
+				flag = false;
+				break;
+		}
+	}
+
+        /*
+	string nameEquipo;
+	string nameJugador;
+	int presupuesto;
+	int salarioJugador;
+	int salario;
+	int valJugador;
+	int limSalarial;
+
+	cout << "Ingrese el nombre del jugador: ";
+	cin >> nameJugador;
+
+	cout << "Ingrese el salario del jugador: ";
+	cin >> salarioJugador;
+
+	cout << "Ingrese el nuevo presupuesto: ";
+	cin >> presupuesto;
+
+	cout << "Ingrese el nuevo salario del jugador: ";
+	cin >> salario;
+
+	cout << "Ingrese el nombre del equipo: ";
+	cin >> nameEquipo;
+
+	cout << endl;
+        */
 
 }
