@@ -212,8 +212,14 @@ void *todosdNuestroPlayes(void* args){
 	}
 }
 
-/*
-void *Limite_Salarial(void* args){
+
+void *Limite_Restante (void* args){
+
+
+}
+
+
+void Limite_Salarial(){
         string New_Limit;
         cout << "Ingrese el nuevo limite Salarial que desea colocar:  ";
         cin >> New_Limit; 
@@ -231,29 +237,8 @@ void *Limite_Salarial(void* args){
 			case 4:  //Sevilla
                         arrayEquipos[3][1] = New_Limit;
                                 break;
-
 		}
 }
-*/
-
-void *Limite_Restante (void* args){
-
-
-}
-
-
-void* Limite_Salarial1(std::vector> *coord) {
-        string New_Limit;
-        cout << "Ingrese el nuevo limite Salarial que desea colocar:     ";
-        cin >> New_Limit; 
-        cout << endl;    
-
-        for(((int)opcionEq1) < coord->size()){
-                (*coord)[(int)opcionEq1][0] = New_Limit;
-        }
-        pthread_exit(0);
-}
-
 
 
 
@@ -271,26 +256,8 @@ void manejoEquipos(){
 			case 2:
                                 Escoger_equipo();
                                 cin >> opcionEq1;
-                                /*
-                                pthread_t tid;
-                                pthread_attr_t attr;
-                                pthread_attr_init(&attr);
-                                pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-
-                                void *exit_value;
-
-                                pthread_create(&tid, &attr, Limite_Salarial, (void*)i);
-                                pthread_join(tid, &exit_value);
-                                
-                                pthread_attr_destroy(&attr);
-				break;
-                                */
-                                
-                                pthread_t t2;
-                                pthread_create(&t2, NULL, (void * (*)(void *))Limite_Salarial1, &arrayEquipos);
-                                pthread_join(t2, NULL);
-                                
-
+                                Limite_Salarial();
+                                break;
 
 			case 3:
 				break;
@@ -395,7 +362,7 @@ int main(int nNumberofArgs, char* pszArgs[]) {
 	cout << "Ingrese el nombre del equipo: ";
 	cin >> nameEquipo;
 
-	cout << endl;
+	
         */
-
+       cout << endl;
 }
