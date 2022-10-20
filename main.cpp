@@ -6,7 +6,7 @@
  * Diego Valdez - 21328
  * Manuel Rodas - 21509
  * Sebastian Estrada - 21405
- * Sebast√°n Solorzano - 21826
+ * Sebast·n Solorzano - 21826
  */
 
 // imports
@@ -26,8 +26,8 @@ int numThreads;
 int opcion, opcionMJ, opcionME, opcionEq1;
 
 /**
- * Los arrays de dos dimensiones est√°n constru√≠dos de la siguiente manera:
- * En la primera dimensi√≥n se encuentran los arrays cada uno de los equipos.
+ * Los arrays de dos dimensiones est·n construÌdos de la siguiente manera:
+ * En la primera dimensiÛn se encuentran los arrays cada uno de los equipos.
  * En el segundo array se encuentran la informacion de cada equipo:
  * [0] Nombre del equipo, [1] Limite salarial, [2] Ingresos, [3] Presupuesto 
  */
@@ -41,8 +41,8 @@ string arrayEquipos [4][4]=
         };
 
 /**
- * Los arrays de dos dimensiones est√°n constru√≠dos de la siguiente manera:
- * En la primera dimensi√≥n se encuentran los arrays cada uno de los jugadores por equipo.
+ * Los arrays de dos dimensiones est·n construÌdos de la siguiente manera:
+ * En la primera dimensiÛn se encuentran los arrays cada uno de los jugadores por equipo.
  * En el segundo array se encuentran la informacion de cada jugador:
  * [0] Nombre del jugador, [1] Valor de mercado, [2] Salario anual
  */
@@ -98,7 +98,7 @@ string arrayAtleticoMadrid [16][3]=
                 {"Marcos Llorente","40000000","5000000"},
                 {"Rodrigo de Paul","35000000","2000000"},
                 {"Koke","20000000","15000000"},
-                {"Saul √ëiguez","20000000","11000000"},
+                {"Saul —iguez","20000000","11000000"},
                 {"Thomas Lemar","35000000","6000000"},
                 {"Yannick Carrasco","40000000","8000000"},
                 {"Angel Correa","40000000","5000000"},
@@ -139,7 +139,7 @@ void impresionMenuInicial(){
 * Impresion menu Jugadores
 */
 void impresionMenuJugadores() {
-	cout << "\n1. Ingresar un Jugador nuevo\n";
+	cout << "\n1. Ingresar Jugadores nuevos\n";
 	cout << "2. Mover Jugador existente\n";
 	cout << "3. Ver todos los jugadores\n";
 	cout << "4. Jugadores por equipo\n";
@@ -156,111 +156,176 @@ void impresionMenuEquipos(){
 	cout << "4. Cambiar presupuesto de fichaje\n";
 	cout << "5. Regresar\n";
 }
-
+/**
+*  Esta funcion no retorna nada solo imprime todos los equipos disponibles
+*/
 void mostrarEquipos(){
-        cout << ".- " << arrayEquipos[0][0] << "\n";
-        cout << ".- " << arrayEquipos[1][0] << "\n";
-        cout << ".- " << arrayEquipos[2][0] << "\n";
-        cout << ".- " << arrayEquipos[3][0] << "\n";
+    cout << ".- " << arrayEquipos[0][0] << "\n";
+    cout << ".- " << arrayEquipos[1][0] << "\n";
+    cout << ".- " << arrayEquipos[2][0] << "\n";
+    cout << ".- " << arrayEquipos[3][0] << "\n";
 }
 
+/**
+*  Esta funcion imprime los equipos a escoger
+*/
 void Escoger_equipo(){
-        cout << "Ingrese el equipo al que desea editar:      "<< "\n";
-        cout << "1. Fc Barcelona"<< "\n";        
+	
+    cout << "Ingrese el equipo al que desea editar:      "<< "\n";
+    cout << "1. Fc Barcelona"<< "\n";        
 	cout << "2. Real Madrid FC"<< "\n";
-        cout << "3. Atletico de Madrid "<< "\n";
-        cout << "4. Sevilla FC"<< "\n"; 
+    cout << "3. Atletico de Madrid "<< "\n";
+    cout << "4. Sevilla FC"<< "\n"; 
 
                 
 }
 
-
-void *mostrarJugadoresXEquipo(void* args){
+/**
+*  Esta funcion imprime cada uno de los jugadores por equipo, con todos los datos reelevantes sobre cada jugador
+*/
+void mostrarJugadoresXEquipo(void args){
 	cout << "-----------------Fc Barcelona----------------\n";
 	for (int jg = 0; jg<16; jg++){
-		cout << jg << ".- " << arrayBarcelona[jg][0] << "\n  -Valor de Mercado: ‚Ç¨" << arrayBarcelona[jg][1] << "\n  -Salario anual: ‚Ç¨" << arrayBarcelona[jg][2] << "\n";
+		cout << jg << ".- " << arrayBarcelona[jg][0] << "\n  -Valor de Mercado: Ä" << arrayBarcelona[jg][1] << "\n  -Salario anual: Ä" << arrayBarcelona[jg][2] << "\n";
 	}
 
         cout << "-----------------Real Madrid FC----------------\n";
 	for (int jg = 0; jg<16; jg++){
-		cout << jg << ".- " << arrayRealMadrid[jg][0] << "\n  -Valor de Mercado: ‚Ç¨" << arrayRealMadrid[jg][1] << "\n  -Salario anual: ‚Ç¨" << arrayRealMadrid[jg][2] << "\n";
+		cout << jg << ".- " << arrayRealMadrid[jg][0] << "\n  -Valor de Mercado: Ä" << arrayRealMadrid[jg][1] << "\n  -Salario anual: Ä" << arrayRealMadrid[jg][2] << "\n";
 	}
 
         cout << "-----------------Atletico de Madrid----------------\n";
         for (int jg = 0; jg<16; jg++){
-                cout << jg << ".- " << arrayAtleticoMadrid[jg][0] << "\n  -Valor de Mercado: ‚Ç¨" << arrayAtleticoMadrid[jg][1] << "\n  -Salario anual: ‚Ç¨" << arrayAtleticoMadrid[jg][2] << "\n";
+                cout << jg << ".- " << arrayAtleticoMadrid[jg][0] << "\n  -Valor de Mercado: Ä" << arrayAtleticoMadrid[jg][1] << "\n  -Salario anual: Ä" << arrayAtleticoMadrid[jg][2] << "\n";
         }
 
         cout << "-----------------Sevilla FC----------------\n";
         for (int jg = 0; jg<15; jg++){
-                cout << jg << ".- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: ‚Ç¨" << arraySevilla[jg][1] << "\n  -Salario anual: ‚Ç¨" << arraySevilla[jg][2] << "\n";
+                cout << jg << ".- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: Ä" << arraySevilla[jg][1] << "\n  -Salario anual: Ä" << arraySevilla[jg][2] << "\n";
         }
 }
 
-void *todosdNuestroPlayes(void* args){
+/**
+*  Esta funcion imprime todos los jugadores en la base de datos
+*/
+void todosdNuestroPlayes(void args){
 	for (int jg = 0; jg<16; jg++){
-		cout << "- " << arrayBarcelona[jg][0] << "\n  -Valor de Mercado: ‚Ç¨" << arrayBarcelona[jg][1] << "\n  -Salario anual: ‚Ç¨" << arrayBarcelona[jg][2] << "\n";
+		cout << "- " << arrayBarcelona[jg][0] << "\n  -Valor de Mercado: Ä" << arrayBarcelona[jg][1] << "\n  -Salario anual: Ä" << arrayBarcelona[jg][2] << "\n";
 	}
 	for (int jg = 0; jg<16; jg++){
-		cout << "- " << arrayRealMadrid[jg][0] << "\n  -Valor de Mercado: ‚Ç¨" << arrayRealMadrid[jg][1] << "\n  -Salario anual: ‚Ç¨" << arrayRealMadrid[jg][2] << "\n";
+		cout << "- " << arrayRealMadrid[jg][0] << "\n  -Valor de Mercado: Ä" << arrayRealMadrid[jg][1] << "\n  -Salario anual: Ä" << arrayRealMadrid[jg][2] << "\n";
 	}
 	for (int jg = 0; jg<16; jg++){
-		cout <<"- " << arrayAtleticoMadrid[jg][0] << "\n  -Valor de Mercado: ‚Ç¨" << arrayAtleticoMadrid[jg][1] << "\n  -Salario anual: ‚Ç¨" << arrayAtleticoMadrid[jg][2] << "\n";
+		cout <<"- " << arrayAtleticoMadrid[jg][0] << "\n  -Valor de Mercado: Ä" << arrayAtleticoMadrid[jg][1] << "\n  -Salario anual: Ä" << arrayAtleticoMadrid[jg][2] << "\n";
 	}
 	for (int jg = 0; jg<15; jg++){
-		cout << "- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: ‚Ç¨" << arraySevilla[jg][1] << "\n  -Salario anual: ‚Ç¨" << arraySevilla[jg][2] << "\n";
+		cout << "- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: Ä" << arraySevilla[jg][1] << "\n  -Salario anual: Ä" << arraySevilla[jg][2] << "\n";
 	}
 }
 
-
-
-
-//Este lo puede usar SOl para el otro
-/*
-void *Limite_Salarial(void* args){
-        string New_Limit;
-        cout << "Ingrese el nuevo limite Salarial que desea colocar:  ";
-        cin >> New_Limit; 
-        
-        switch ((int)opcionEq1){
-			case 1:   // Barcelona
-                        arrayEquipos[0][1] = New_Limit;
-                                break;
-			case 2:  //Real madrid 
-                        arrayEquipos[1][1] = New_Limit;
-				break;
-			case 3: // Atletico de Madrid
-                        arrayEquipos[2][1] = New_Limit;
-                                break;
-			case 4:  //Sevilla
-                        arrayEquipos[3][1] = New_Limit;
-                                break;
-
-		}
-}
+// Lo hago yo
+/**
+*  Esta funcion calcula lo restante del limite salarial de cada equipo
 */
-
-void *Limite_Restante (void* args){
-
+void Limite_Restante (){
+	
 
 }
 
-/*
-void* Limite_Salarial1(std::vector> *coord) {
-        string New_Limit;
-        cout << "Ingrese el nuevo limite Salarial que desea colocar:     ";
-        cin >> New_Limit; 
-        cout << endl;    
 
-        for(((int)opcionEq1) < coord->size()){
-                (*coord)[(int)opcionEq1][0] = New_Limit;
-        }
-        pthread_exit(0);
+/**
+*  Esta funcion reasigna el limite salarial en base a cada equipo
+*/
+void Limite_Salarial(){
+    string New_Limit;
+    cout << "Ingrese el nuevo limite Salarial que desea colocar:  ";
+    cin >> New_Limit; 
+        
+    switch ((int)opcionEq1){
+		case 1:   // Barcelona
+            arrayEquipos[0][1] = New_Limit;
+            break;
+		case 2:  //Real madrid 
+            arrayEquipos[1][1] = New_Limit;
+			break;
+		case 3: // Atletico de Madrid
+            arrayEquipos[2][1] = New_Limit;
+            break;
+		case 4:  //Sevilla
+            arrayEquipos[3][1] = New_Limit;
+            break;
+	}
 }
- */
+
+void nuevoPresupuesto(){
+    string New_PresupuestoFCB;
+    string New_PresupuestoRM;
+    string New_PresupuestoATL;
+    string New_PresupuestoSEV;
+    Escoger_equipo();
+    cin >> opcionEq1;
+
+    switch ((int)opcionEq1){
+	    case 1: // Barcelona
+            cout << "Ingrese el nuevo presupuesto que desea colocar: ";
+            cin >> New_PresupuestoFCB;
+            if (New_PresupuestoFCB <= arrayEquipos[1][2]){
+                    arrayEquipos[1][3] = New_PresupuestoFCB;
+                    cout << "Nuevo presupuesto agregado\n";
+            }
+            else{
+                    cout << "El presupesto no puede ser mayor a los ingresos\n";
+            }          
+	    	break;
+	    
+	    case 2:  //Real madrid 
+            cout << "Ingrese el nuevo presupuesto que desea colocar: ";
+            cin >> New_PresupuestoRM;
+            
+            if (New_PresupuestoRM <= arrayEquipos[0][2]){
+                    arrayEquipos[0][3] = New_PresupuestoRM;
+                    cout << "Nuevo presupuesto agregado\n";
+            }
+            else{
+                    cout << "El presupesto no puede ser mayor a los ingresos\n";
+            }
+                    
+            break;
+
+        case 3: // Atletico de Madrid 
+            cout << "Ingrese el nuevo presupuesto que desea colocar: ";
+            cin >> New_PresupuestoATL;
+
+            if (New_PresupuestoATL <= arrayEquipos[2][2]){
+                    arrayEquipos[2][3] = New_PresupuestoATL;
+                    cout << "Nuevo presupuesto agregado\n";
+            }
+            else{
+                    cout << "El presupesto no puede ser mayor a los ingresos\n";
+            }    
+            
+    		break;
+
+        case 4:  //Sevilla
+            cout << "Ingrese el nuevo presupuesto que desea colocar: ";
+            cin >> New_PresupuestoSEV;
+           
+            if (New_PresupuestoSEV <= arrayEquipos[3][2]){
+                    arrayEquipos[3][3] = New_PresupuestoSEV;
+                    cout << "Nuevo presupuesto agregado\n";
+            }
+            else{
+                    cout << "El presupesto no puede ser mayor a los ingresos\n";
+            }      
+                
+        	break;
+    } 
+}
 
 
-
+/**
+*  En esta funcion se realiza el manejo del menu de equipo
+*/
 void manejoEquipos(){
         bool flagME = true;
         long i;
@@ -270,43 +335,29 @@ void manejoEquipos(){
 		
 		switch ((int)opcionME){
 			case 1:
-                                mostrarEquipos();
+                mostrarEquipos();
 				break;
 			case 2:
-                                Escoger_equipo();
-                                cin >> opcionEq1;
-                                /*
-                                pthread_t tid;
-                                pthread_attr_t attr;
-                                pthread_attr_init(&attr);
-                                pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+                Escoger_equipo();
+                cin >> opcionEq1;
+                Limite_Salarial();
+                break;
 
-                                void *exit_value;
-
-                                pthread_create(&tid, &attr, Limite_Salarial, (void*)i);
-                                pthread_join(tid, &exit_value);
-                                
-                                pthread_attr_destroy(&attr);
-				break;
-                                
-                                
-                                pthread_t t2;
-                                pthread_create(&t2, NULL, (void * (*)(void *))Limite_Salarial1, &arrayEquipos);
-                                pthread_join(t2, NULL);
-                                */
-
-
-			case 3:
+			case 3:// Yo
 				break;
 			case 4:
+				nuevoPresupuesto();
 				break;
-                        case 5:
-                                flagME = false;
+            case 5:
+                flagME = false;
 				break;
 		}
 	}
 }
 
+/**
+*  En esta funcion se realiza el manejo de 
+*/
 void manejoJugadores(){
         bool flagMJ = true;
         long i;
@@ -315,35 +366,35 @@ void manejoJugadores(){
 		cin >> opcionMJ;
 		
 		switch ((int)opcionMJ){
-			case 1:
+			case 1:// Yo
 				break;
-			case 2:
+			case 2: // Yo
 				break;
 			case 3:
 				pthread_t tid;
-                                pthread_attr_t attr;
-                                pthread_attr_init(&attr);
-                                pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+                pthread_attr_t attr;
+                pthread_attr_init(&attr);
+                pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
-                                void *exit_value;
+                void *exit_value;
 
-                                pthread_create(&tid, &attr, todosdNuestroPlayes, (void*)i);
-                                pthread_join(tid, &exit_value);
-                                
-                                pthread_attr_destroy(&attr);
+                pthread_create(&tid, &attr, todosdNuestroPlayes, (void*)i);
+                pthread_join(tid, &exit_value);
+                
+                pthread_attr_destroy(&attr);
 				break;
 			case 4:
 				pthread_t tid2;
-                                pthread_attr_t attr2;
-                                pthread_attr_init(&attr2);
-                                pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+                pthread_attr_t attr2;
+                pthread_attr_init(&attr2);
+                pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
-                                void *exit_value2;
+                void *exit_value2;
 
-                                pthread_create(&tid2, &attr2, mostrarJugadoresXEquipo, (void*)i);
-                                pthread_join(tid2, &exit_value2);
-                                
-                                pthread_attr_destroy(&attr2);
+                pthread_create(&tid2, &attr2, mostrarJugadoresXEquipo, (void*)i);
+                pthread_join(tid2, &exit_value2);
+                
+                pthread_attr_destroy(&attr2);
 				break;
                         case 5:
                                 flagMJ = false;
@@ -399,7 +450,7 @@ int main(int nNumberofArgs, char* pszArgs[]) {
 	cout << "Ingrese el nombre del equipo: ";
 	cin >> nameEquipo;
 
-	cout << endl;
+	
         */
-
+       cout << endl;
 }
