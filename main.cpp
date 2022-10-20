@@ -261,6 +261,13 @@ void* calculoLimRes(void* arg){
 			limSalResSV = limSalResSV - atol(arraySevilla[indiceJugador][2].c_str());
 			pthread_mutex_unlock(&candado);
 			break;
+		
+		cout << "Limite salarial restante de:\n";
+		cout << "Real madrid: € " << limSalResRM << "\n";
+		cout << "Barcelona: € " << limSalResBC << "\n";
+		cout << "Atletico de Madrid: € " << limSalResATL << "\n";
+		cout << "Sevilla: € " << limSalResSV << "\n";
+			
 	}
 	
 }
