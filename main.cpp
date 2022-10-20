@@ -22,7 +22,7 @@ using namespace std;     // Usar estandar de c++ para flujos de IN y OUT
 
 // Variables Globales
 int numThreads;
-int opcion, opcionMJ, opcionME;
+int opcion, opcionMJ, opcionME, opcionEq1;
 
 /**
  * Los arrays de dos dimensiones están construídos de la siguiente manera:
@@ -163,6 +163,14 @@ void mostrarEquipos(){
         cout << ".- " << arrayEquipos[3][0] << "\n";
 }
 
+void Escoger_equipo(){
+        cout << "Ingrese el equipo al que desea editar el limite Salarial:      (Cantidad en Euros)";
+        cout << "1. Fc Barcelona";        
+	cout << "2. Real Madrid FC";
+        cout << "3. Atletico de Madrid ";
+        cout << "4. Sevilla FC";          
+}
+
 
 void *mostrarJugadoresXEquipo(void* args){
 	cout << "-----------------Fc Barcelona----------------\n";
@@ -202,8 +210,74 @@ void *todosdNuestroPlayes(void* args){
 }
 
 
+void *Limite_Salarial(void* args){
+        string New_Limit;
+        cout << "Ingrese el nuevo limite Salarial que desea colocar:  ";
+        cin >> New_Limit; 
+        cout << endl;
+
+        switch ((int)opcionEq1){
+			case 1:   // Barcelona
+                        arrayEquipos[0][1] = New_Limit;
+                                break;
+			case 2:  //Real madrid 
+                        arrayEquipos[1][1] = New_Limit;
+				break;
+			case 3: // Atletico de Madrid
+                        arrayEquipos[2][1] = New_Limit;
+                                break;
+			case 4:  //Sevilla
+                        arrayEquipos[3][1] = New_Limit;
+                                break;
+
+		}
+
+
+
+        /*        
+        int *coord = (int *) args;
+
+        for (opcionEq1 < coord->size()){
+                (*coord)[1][1] = New_Limit;
+        }*/
+
+
+
+        /*
+        int Limite_S;
+        Escoger_equipo();
+	cin >> opcionEq;
+        switch ((int)opcionEq){
+			case 1:   // Barcelona
+				break;
+			case 2:  //Real madrid 
+				break;
+			case 3: // Atletico de Madrid+
+                                break;
+			case 4:  //Sevilla
+                                break;
+
+		}
+        
+        cout << "Ingrese el nuevo limite Salarial: ";
+	cin >> Limite_S;
+
+
+
+
+        cout << endl;
+        */
+
+}
+
+
+
+
+
+
 void manejoEquipos(){
         bool flagME = true;
+        long i;
 	while(flagME){
 		impresionMenuEquipos();
 		cin >> opcionME;
@@ -213,6 +287,19 @@ void manejoEquipos(){
                                 mostrarEquipos();
 				break;
 			case 2:
+                                Escoger_equipo();
+                                cin >> opcionEq1;
+                                pthread_t tid;
+                                pthread_attr_t attr;
+                                pthread_attr_init(&attr);
+                                pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+
+                                void *exit_value;
+
+                                pthread_create(&tid, &attr, Limite_Salarial, (void*)i);
+                                pthread_join(tid, &exit_value);
+                                
+                                pthread_attr_destroy(&attr);
 				break;
 			case 3:
 				break;
