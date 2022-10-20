@@ -17,6 +17,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <vector>
 
 using namespace std;     // Usar estandar de c++ para flujos de IN y OUT
 
@@ -164,11 +165,13 @@ void mostrarEquipos(){
 }
 
 void Escoger_equipo(){
-        cout << "Ingrese el equipo al que desea editar el limite Salarial:      (Cantidad en Euros)";
-        cout << "1. Fc Barcelona";        
-	cout << "2. Real Madrid FC";
-        cout << "3. Atletico de Madrid ";
-        cout << "4. Sevilla FC";          
+        cout << "Ingrese el equipo al que desea editar:      "<< "\n";
+        cout << "1. Fc Barcelona"<< "\n";        
+	cout << "2. Real Madrid FC"<< "\n";
+        cout << "3. Atletico de Madrid "<< "\n";
+        cout << "4. Sevilla FC"<< "\n"; 
+
+                
 }
 
 
@@ -209,13 +212,12 @@ void *todosdNuestroPlayes(void* args){
 	}
 }
 
-
+/*
 void *Limite_Salarial(void* args){
         string New_Limit;
         cout << "Ingrese el nuevo limite Salarial que desea colocar:  ";
         cin >> New_Limit; 
-        cout << endl;
-
+        
         switch ((int)opcionEq1){
 			case 1:   // Barcelona
                         arrayEquipos[0][1] = New_Limit;
@@ -232,11 +234,17 @@ void *Limite_Salarial(void* args){
 
 		}
 }
+*/
 
-/*
+void *Limite_Restante (void* args){
+
+
+}
+
+
 void* Limite_Salarial1(std::vector> *coord) {
         string New_Limit;
-        cout << "Ingrese el nuevo limite Salarial que desea colocar:  ";
+        cout << "Ingrese el nuevo limite Salarial que desea colocar:     ";
         cin >> New_Limit; 
         cout << endl;    
 
@@ -245,7 +253,7 @@ void* Limite_Salarial1(std::vector> *coord) {
         }
         pthread_exit(0);
 }
-*/
+
 
 
 
@@ -263,6 +271,7 @@ void manejoEquipos(){
 			case 2:
                                 Escoger_equipo();
                                 cin >> opcionEq1;
+                                /*
                                 pthread_t tid;
                                 pthread_attr_t attr;
                                 pthread_attr_init(&attr);
@@ -275,12 +284,12 @@ void manejoEquipos(){
                                 
                                 pthread_attr_destroy(&attr);
 				break;
-
-                                /*
+                                */
+                                
                                 pthread_t t2;
                                 pthread_create(&t2, NULL, (void * (*)(void *))Limite_Salarial1, &arrayEquipos);
                                 pthread_join(t2, NULL);
-                                */
+                                
 
 
 			case 3:
