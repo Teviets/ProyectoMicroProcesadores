@@ -231,47 +231,21 @@ void *Limite_Salarial(void* args){
                                 break;
 
 		}
-
-
-
-        /*        
-        int *coord = (int *) args;
-
-        for (opcionEq1 < coord->size()){
-                (*coord)[1][1] = New_Limit;
-        }*/
-
-
-
-        /*
-        int Limite_S;
-        Escoger_equipo();
-	cin >> opcionEq;
-        switch ((int)opcionEq){
-			case 1:   // Barcelona
-				break;
-			case 2:  //Real madrid 
-				break;
-			case 3: // Atletico de Madrid+
-                                break;
-			case 4:  //Sevilla
-                                break;
-
-		}
-        
-        cout << "Ingrese el nuevo limite Salarial: ";
-	cin >> Limite_S;
-
-
-
-
-        cout << endl;
-        */
-
 }
 
+/*
+void* Limite_Salarial1(std::vector> *coord) {
+        string New_Limit;
+        cout << "Ingrese el nuevo limite Salarial que desea colocar:  ";
+        cin >> New_Limit; 
+        cout << endl;    
 
-
+        for(((int)opcionEq1) < coord->size()){
+                (*coord)[(int)opcionEq1][0] = New_Limit;
+        }
+        pthread_exit(0);
+}
+*/
 
 
 
@@ -301,6 +275,14 @@ void manejoEquipos(){
                                 
                                 pthread_attr_destroy(&attr);
 				break;
+
+                                /*
+                                pthread_t t2;
+                                pthread_create(&t2, NULL, (void * (*)(void *))Limite_Salarial1, &arrayEquipos);
+                                pthread_join(t2, NULL);
+                                */
+
+
 			case 3:
 				break;
 			case 4:
