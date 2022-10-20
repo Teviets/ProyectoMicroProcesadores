@@ -24,6 +24,9 @@ using namespace std;     // Usar estandar de c++ para flujos de IN y OUT
 // Variables Globales
 int numThreads;
 int opcion, opcionMJ, opcionME, opcionEq1;
+long limSalResRM, limSalResBC, limSalResATL, limSalResSV;
+char *e;
+pthread_mutex_t candado;
 
 /**
  * Los arrays de dos dimensiones están construídos de la siguiente manera:
@@ -107,7 +110,7 @@ string arrayAtleticoMadrid [16][3]=
                 {"Alvaro Morata","25000000","10000000"}
         };
 
-string arraySevilla [15][3]=
+string arraySevilla [16][3]=
         {
                 {"Bono","18000000","2000000"},
                 {"Marcos Acuna","18000000","3000000"},
@@ -123,7 +126,9 @@ string arraySevilla [15][3]=
                 {"Erik Lamela","160000000","3000000"},
                 {"Suso","10000000","2000000"},
                 {"Youssef En-Nesyri","20000000","3000000"},
-                {"Rafa Mir","16000000","2000000"}
+                {"Rafa Mir","16000000","2000000"},
+                {"Juanito Perez","1","3"}
+                
         };
 
 /**
@@ -183,7 +188,7 @@ void Escoger_equipo(){
 /**
 *  Esta funcion imprime cada uno de los jugadores por equipo, con todos los datos reelevantes sobre cada jugador
 */
-void mostrarJugadoresXEquipo(void args){
+void *mostrarJugadoresXEquipo(void* args){
 	cout << "-----------------Fc Barcelona----------------\n";
 	for (int jg = 0; jg<16; jg++){
 		cout << jg << ".- " << arrayBarcelona[jg][0] << "\n  -Valor de Mercado: €" << arrayBarcelona[jg][1] << "\n  -Salario anual: €" << arrayBarcelona[jg][2] << "\n";
@@ -208,7 +213,7 @@ void mostrarJugadoresXEquipo(void args){
 /**
 *  Esta funcion imprime todos los jugadores en la base de datos
 */
-void todosdNuestroPlayes(void args){
+void *todosdNuestroPlayes(void* args){
 	for (int jg = 0; jg<16; jg++){
 		cout << "- " << arrayBarcelona[jg][0] << "\n  -Valor de Mercado: €" << arrayBarcelona[jg][1] << "\n  -Salario anual: €" << arrayBarcelona[jg][2] << "\n";
 	}
@@ -222,13 +227,62 @@ void todosdNuestroPlayes(void args){
 		cout << "- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: €" << arraySevilla[jg][1] << "\n  -Salario anual: €" << arraySevilla[jg][2] << "\n";
 	}
 }
+// Estructura que guarda los indices para el calculo del limite salarial restante
+struct indicesParam{
+	int indiceEquipo;
+	int indiceJugador;
+};
+
+/**
+*  Funcion para hilos de calculo limite salarial restante
+*/
+void* calculoLimRes(void* arg){
+	indicesParam *indices = (indicesParam*) arg;
+	int indiceEquipo = indices->indiceEquipo;
+	int indiceJugador = indices->indiceEquipo;
+	switch (indiceEquipo){
+		case 1: // Real
+			pthread_mutex_lock(&candado);
+			limSalResRM = limSalResRM - atol(arrayRealMadrid[indiceJugador][2].c_str());
+			pthread_mutex_unlock(&candado);
+			break;
+		case 2: // Barca
+			pthread_mutex_lock(&candado);
+			limSalResBC = limSalResBC - atol(arrayBarcelona[indiceJugador][2].c_str());
+			pthread_mutex_unlock(&candado);
+			break;
+		case 3: // Atleti
+			pthread_mutex_lock(&candado);
+			limSalResATL = limSalResATL - atol(arrayAtleticoMadrid[indiceJugador][2].c_str());
+			pthread_mutex_unlock(&candado);
+			break;
+		case 4: // Sevilla
+			pthread_mutex_lock(&candado);
+			limSalResSV = limSalResSV - atol(arraySevilla[indiceJugador][2].c_str());
+			pthread_mutex_unlock(&candado);
+			break;
+	}
+	
+}
 
 // Lo hago yo
 /**
 *  Esta funcion calcula lo restante del limite salarial de cada equipo
 */
 void Limite_Restante (){
+	pthread_t hilos[16];
+	long limSalRest;
+	indicesParam misIndices;
 	
+	pthread_mutex_init(&candado,NULL);
+	for (int i = 0; i<4; i++){
+		misIndices.indiceEquipo = i;
+		for (int j = 0; j<16; j++){
+			misIndices.indiceJugador = j;
+			pthread_create(&hilos[j],NULL,&calculoLimRes,(void*)&misIndices);
+		}
+	}
+	pthread_mutex_destroy(&candado);
 
 }
 
@@ -343,7 +397,8 @@ void manejoEquipos(){
                 Limite_Salarial();
                 break;
 
-			case 3:// Yo
+			case 3:// Limite salarial Restante
+				Limite_Restante();
 				break;
 			case 4:
 				nuevoPresupuesto();
@@ -378,7 +433,7 @@ void manejoJugadores(){
 
                 void *exit_value;
 
-                pthread_create(&tid, &attr, todosdNuestroPlayes, (void*)i);
+                pthread_create(&tid, &attr, todosdNuestroPlayes, (void*)&i);
                 pthread_join(tid, &exit_value);
                 
                 pthread_attr_destroy(&attr);
@@ -391,13 +446,13 @@ void manejoJugadores(){
 
                 void *exit_value2;
 
-                pthread_create(&tid2, &attr2, mostrarJugadoresXEquipo, (void*)i);
+                pthread_create(&tid2, &attr2, mostrarJugadoresXEquipo, (void*)&i);
                 pthread_join(tid2, &exit_value2);
                 
                 pthread_attr_destroy(&attr2);
 				break;
-                        case 5:
-                                flagMJ = false;
+            case 5:
+                flagMJ = false;
 				break;
 		}
 	}
@@ -405,7 +460,10 @@ void manejoJugadores(){
 
 
 int main(int nNumberofArgs, char* pszArgs[]) {
-	
+	limSalResRM = atol(arrayEquipos[0][1].c_str());
+	limSalResBC = atol(arrayEquipos[1][1].c_str());
+	limSalResATL = atol(arrayEquipos[2][1].c_str());
+	limSalResSV = atol(arrayEquipos[3][1].c_str());
 	bool flag = true;
 	// Ciclo para manejo general del programa
 	while (flag){
@@ -453,4 +511,5 @@ int main(int nNumberofArgs, char* pszArgs[]) {
 	
         */
        cout << endl;
+       return 0;
 }
