@@ -316,7 +316,9 @@ void Limite_Salarial(){
             break;
 	}
 }
-
+/**
+*  Esta funcion permite establecer un nuevo presupuesto
+*/
 void nuevoPresupuesto(){
     string New_PresupuestoFCB;
     string New_PresupuestoRM;
@@ -381,6 +383,9 @@ void nuevoPresupuesto(){
         	break;
     } 
 }
+/**
+*  Funcion para threads en el ingreso de jugador
+*/
 void* remplazoJugador(void* arg){
 	indicesParam *indices = (indicesParam*) arg;
 	int indiceEquipo = indices->indiceEquipo;
@@ -417,7 +422,9 @@ void* remplazoJugador(void* arg){
 			break;
 	}
 }
-
+/**
+* Esta funcion permite crear un nuevo jugador y remplazarlo por uno ya existente
+*/
 void ingresoJugadores(){
 	
 	cout << "Ingrese cuantos jugadores ingresaran\n";
@@ -455,8 +462,6 @@ void ingresoJugadores(){
 			}
 			break;
 	}
-	
-	
 	
 	pthread_t hilosJgNuevos[cantThread];
 	for (int i = 0; i<cantThread; i++){
