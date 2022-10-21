@@ -126,7 +126,7 @@ string arraySevilla [16][3]=
                 {"Suso","10000000","2000000"},
                 {"Youssef En-Nesyri","20000000","3000000"},
                 {"Rafa Mir","16000000","2000000"},
-                {"Juanito Perez","1","3"}
+                {"Cristiano Ronaldo","-155","100"}
                 
         };
 
@@ -144,10 +144,9 @@ void impresionMenuInicial(){
 */
 void impresionMenuJugadores() {
 	cout << "\n1. Ingresar Jugadores nuevos\n";
-	cout << "2. Mover Jugador existente\n";
-	cout << "3. Ver todos los jugadores\n";
-	cout << "4. Jugadores por equipo\n";
-	cout << "5. Regresar\n";
+	cout << "2. Ver todos los jugadores\n";
+	cout << "3. Jugadores por equipo\n";
+	cout << "4. Regresar\n";
 }
 
 /**
@@ -204,7 +203,7 @@ void *mostrarJugadoresXEquipo(void* args){
         }
 
         cout << "-----------------Sevilla FC----------------\n";
-        for (int jg = 0; jg<15; jg++){
+        for (int jg = 0; jg<16; jg++){
                 cout << jg << ".- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: €" << arraySevilla[jg][1] << "\n  -Salario anual: €" << arraySevilla[jg][2] << "\n";
         }
 }
@@ -222,7 +221,7 @@ void *todosdNuestroPlayes(void* args){
 	for (int jg = 0; jg<16; jg++){
 		cout <<"- " << arrayAtleticoMadrid[jg][0] << "\n  -Valor de Mercado: €" << arrayAtleticoMadrid[jg][1] << "\n  -Salario anual: €" << arrayAtleticoMadrid[jg][2] << "\n";
 	}
-	for (int jg = 0; jg<15; jg++){
+	for (int jg = 0; jg<16; jg++){
 		cout << "- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: €" << arraySevilla[jg][1] << "\n  -Salario anual: €" << arraySevilla[jg][2] << "\n";
 	}
 }
@@ -379,16 +378,44 @@ void nuevoPresupuesto(){
         	break;
     } 
 }
+void* remplazoJugador(void* arg){
+	indicesParam *indices = (indicesParam*) arg;
+	int indiceEquipo = indices->indiceEquipo;
+	int indiceJugador = indices->indiceEquipo;
+}
 
-
-void intercambioJugadores(){
-	cout << "Ingrese el indice del cual vien su jugador: \n";
+void ingresoJugadores(){
+	cout << "Ingrese cuantos jugadores ingresaran\n";
+	int cantThread;
+	cin >> cantThread;
+	
+	cout << "Ingrese el indice del equipo al que va a ingresar los jugadores\n";
 	mostrarEquipos();
 	int indiceEquipo;
 	cin >> indiceEquipo;
 	
+	switch (indiceEquipo){
+		case 1:// Real
+			
+			break;
+		case 2: // Barca
+			
+			break;
+		case 3: // Atleti
+			
+			break;
+		case 4: // Sevilla
+			
+			break;
+	}
 	
+	pthread_t hilosJgNuevos[cantThread];
+	
+	for (int i = 0; i<cantThread; i++){
+		
+	}
 }
+
 /**
 *  En esta funcion se realiza el manejo del menu de equipo
 */
@@ -435,11 +462,9 @@ void manejoJugadores(){
 		
 		switch ((int)opcionMJ){
 			case 1:// Yo La otra aplicacion añadir jugador
+				ingresoJugadores();
 				break;
-			case 2: // Yo Cambiar
-				
-				break;
-			case 3:
+			case 2:
 				pthread_t tid;
                 pthread_attr_t attr;
                 pthread_attr_init(&attr);
@@ -452,7 +477,7 @@ void manejoJugadores(){
                 
                 pthread_attr_destroy(&attr);
 				break;
-			case 4:
+			case 3:
 				pthread_t tid2;
                 pthread_attr_t attr2;
                 pthread_attr_init(&attr2);
@@ -465,7 +490,7 @@ void manejoJugadores(){
                 
                 pthread_attr_destroy(&attr2);
 				break;
-            case 5:
+            case 4:
                 flagMJ = false;
 				break;
 		}
