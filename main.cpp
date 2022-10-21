@@ -230,6 +230,9 @@ void *todosdNuestroPlayes(void* args){
 struct indicesParam{
 	int indiceEquipo;
 	int indiceJugador;
+	string nombre;
+	string salario;
+	string precio;
 };
 
 /**
@@ -241,24 +244,24 @@ void* calculoLimRes(void* arg){
 	int indiceJugador = indices->indiceEquipo;
 	switch (indiceEquipo){
 		case 1: // Real
-			//pthread_mutex_lock(&candado);
+			pthread_mutex_lock(&candado);
 			limSalResRM = limSalResRM - atol(arrayRealMadrid[indiceJugador][2].c_str());
-			//pthread_mutex_unlock(&candado);
+			pthread_mutex_unlock(&candado);
 			break;
 		case 2: // Barca
-			//pthread_mutex_lock(&candado);
+			pthread_mutex_lock(&candado);
 			limSalResBC = limSalResBC - atol(arrayBarcelona[indiceJugador][2].c_str());
-			//pthread_mutex_unlock(&candado);
+			pthread_mutex_unlock(&candado);
 			break;
 		case 3: // Atleti
-			//pthread_mutex_lock(&candado);
+			pthread_mutex_lock(&candado);
 			limSalResATL = limSalResATL - atol(arrayAtleticoMadrid[indiceJugador][2].c_str());
-			//pthread_mutex_unlock(&candado);
+			pthread_mutex_unlock(&candado);
 			break;
 		case 4: // Sevilla
-			//pthread_mutex_lock(&candado);
+			pthread_mutex_lock(&candado);
 			limSalResSV = limSalResSV - atol(arraySevilla[indiceJugador][2].c_str());
-			//pthread_mutex_unlock(&candado);
+			pthread_mutex_unlock(&candado);
 			break;	
 	}
 }
@@ -271,7 +274,7 @@ void Limite_Restante (){
 	long limSalRest;
 	indicesParam misIndices;
 	
-	//pthread_mutex_init(&candado,NULL);
+	pthread_mutex_init(&candado,NULL);
 	for (int i = 0; i<4; i++){
 		misIndices.indiceEquipo = i;
 		for (int j = 0; j<16; j++){
@@ -382,12 +385,48 @@ void* remplazoJugador(void* arg){
 	indicesParam *indices = (indicesParam*) arg;
 	int indiceEquipo = indices->indiceEquipo;
 	int indiceJugador = indices->indiceEquipo;
+	
+	switch (indiceEquipo){
+		case 1: // Real
+			pthread_mutex_lock(&candado);
+			arrayRealMadrid[indiceJugador][0] = indices->nombre;
+			arrayRealMadrid[indiceJugador][1] = indices->salario;
+			arrayRealMadrid[indiceJugador][2] = indices->precio;
+			pthread_mutex_unlock(&candado);
+			break;
+		case 2: // Barca
+			pthread_mutex_lock(&candado);
+			arrayBarcelona[indiceJugador][0] = indices->nombre;
+			arrayBarcelona[indiceJugador][1] = indices->salario;
+			arrayBarcelona[indiceJugador][2] = indices->precio;
+			pthread_mutex_unlock(&candado);
+			break;
+		case 3: // Atleti
+			pthread_mutex_lock(&candado);
+			arrayAtleticoMadrid[indiceJugador][0] = indices->nombre;
+			arrayAtleticoMadrid[indiceJugador][1] = indices->salario;
+			arrayAtleticoMadrid[indiceJugador][2] = indices->precio;
+			pthread_mutex_unlock(&candado);
+			break;
+		case 4: // Sevilla
+			pthread_mutex_lock(&candado);
+			arraySevilla[indiceJugador][0] = indices->nombre;
+			arraySevilla[indiceJugador][1] = indices->salario;
+			arraySevilla[indiceJugador][2] = indices->precio;
+			pthread_mutex_unlock(&candado);
+			break;
+	}
 }
 
 void ingresoJugadores(){
+	
 	cout << "Ingrese cuantos jugadores ingresaran\n";
 	int cantThread;
 	cin >> cantThread;
+	
+	indicesParam misIndices[cantThread];
+	
+	
 	
 	cout << "Ingrese el indice del equipo al que va a ingresar los jugadores\n";
 	mostrarEquipos();
@@ -396,24 +435,46 @@ void ingresoJugadores(){
 	
 	switch (indiceEquipo){
 		case 1:// Real
-			
+			for (int jg = 0; jg<16; jg++){
+				cout << jg << "- " << arrayRealMadrid[jg][0] << "\n  -Valor de Mercado: €" << arrayRealMadrid[jg][1] << "\n  -Salario anual: €" << arrayRealMadrid[jg][2] << "\n";
+			}
 			break;
 		case 2: // Barca
-			
+			for (int jg = 0; jg<16; jg++){
+				cout << jg << "- " << arrayBarcelona[jg][0] << "\n  -Valor de Mercado: €" << arrayBarcelona[jg][1] << "\n  -Salario anual: €" << arrayBarcelona[jg][2] << "\n";
+			}
 			break;
 		case 3: // Atleti
-			
+			for (int jg = 0; jg<16; jg++){
+				cout << jg << "- " << arrayAtleticoMadrid[jg][0] << "\n  -Valor de Mercado: €" << arrayAtleticoMadrid[jg][1] << "\n  -Salario anual: €" << arrayAtleticoMadrid[jg][2] << "\n";
+			}
 			break;
 		case 4: // Sevilla
-			
+			for (int jg = 0; jg<16; jg++){
+				cout << jg << "- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: €" << arraySevilla[jg][1] << "\n  -Salario anual: €" << arraySevilla[jg][2] << "\n";
+			}
 			break;
 	}
 	
-	pthread_t hilosJgNuevos[cantThread];
 	
+	
+	pthread_t hilosJgNuevos[cantThread];
+	for (int i = 0; i<cantThread; i++){
+		cout << "\nIngrese el indice del jugador al que va a remplazar: ";
+		cin >> misIndices[i].indiceJugador;
+		cout << "Ingrese el nombre del jugador: ";
+		cin >> misIndices[i].nombre;
+		cout << "\nIngrese el salario del jugador: ";
+		cin >> misIndices[i].salario;
+		cout << "\nIngrese el Precio del jugador: ";
+		cin >> misIndices[i].precio;
+	}
+	pthread_mutex_init(&candado,NULL);
 	for (int i = 0; i<cantThread; i++){
 		
+		pthread_create(&hilosJgNuevos[i],NULL,&remplazoJugador,(void*)&misIndices[i]);
 	}
+	pthread_mutex_destroy(&candado);
 }
 
 /**
