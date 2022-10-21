@@ -241,7 +241,7 @@ struct indicesParam{
 void* calculoLimRes(void* arg){
 	indicesParam *indices = (indicesParam*) arg;
 	int indiceEquipo = indices->indiceEquipo;
-	int indiceJugador = indices->indiceEquipo;
+	int indiceJugador = indices->indiceJugador;
 	switch (indiceEquipo){
 		case 1: // Real
 			pthread_mutex_lock(&candado);
