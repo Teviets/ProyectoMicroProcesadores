@@ -25,7 +25,6 @@ using namespace std;     // Usar estandar de c++ para flujos de IN y OUT
 int numThreads;
 int opcion, opcionMJ, opcionME, opcionEq1;
 long limSalResRM, limSalResBC, limSalResATL, limSalResSV;
-char *e;
 pthread_mutex_t candado;
 
 /**
@@ -165,10 +164,10 @@ void impresionMenuEquipos(){
 *  Esta funcion no retorna nada solo imprime todos los equipos disponibles
 */
 void mostrarEquipos(){
-    cout << ".- " << arrayEquipos[0][0] << "\n";
-    cout << ".- " << arrayEquipos[1][0] << "\n";
-    cout << ".- " << arrayEquipos[2][0] << "\n";
-    cout << ".- " << arrayEquipos[3][0] << "\n";
+    cout << "1.- " << arrayEquipos[0][0] << "\n";
+    cout << "2.- " << arrayEquipos[1][0] << "\n";
+    cout << "3.- " << arrayEquipos[2][0] << "\n";
+    cout << "4.- " << arrayEquipos[3][0] << "\n";
 }
 
 /**
@@ -227,6 +226,7 @@ void *todosdNuestroPlayes(void* args){
 		cout << "- " << arraySevilla[jg][0] << "\n  -Valor de Mercado: €" << arraySevilla[jg][1] << "\n  -Salario anual: €" << arraySevilla[jg][2] << "\n";
 	}
 }
+
 // Estructura que guarda los indices para el calculo del limite salarial restante
 struct indicesParam{
 	int indiceEquipo;
@@ -242,37 +242,28 @@ void* calculoLimRes(void* arg){
 	int indiceJugador = indices->indiceEquipo;
 	switch (indiceEquipo){
 		case 1: // Real
-			pthread_mutex_lock(&candado);
+			//pthread_mutex_lock(&candado);
 			limSalResRM = limSalResRM - atol(arrayRealMadrid[indiceJugador][2].c_str());
-			pthread_mutex_unlock(&candado);
+			//pthread_mutex_unlock(&candado);
 			break;
 		case 2: // Barca
-			pthread_mutex_lock(&candado);
+			//pthread_mutex_lock(&candado);
 			limSalResBC = limSalResBC - atol(arrayBarcelona[indiceJugador][2].c_str());
-			pthread_mutex_unlock(&candado);
+			//pthread_mutex_unlock(&candado);
 			break;
 		case 3: // Atleti
-			pthread_mutex_lock(&candado);
+			//pthread_mutex_lock(&candado);
 			limSalResATL = limSalResATL - atol(arrayAtleticoMadrid[indiceJugador][2].c_str());
-			pthread_mutex_unlock(&candado);
+			//pthread_mutex_unlock(&candado);
 			break;
 		case 4: // Sevilla
-			pthread_mutex_lock(&candado);
+			//pthread_mutex_lock(&candado);
 			limSalResSV = limSalResSV - atol(arraySevilla[indiceJugador][2].c_str());
-			pthread_mutex_unlock(&candado);
-			break;
-		
-		cout << "Limite salarial restante de:\n";
-		cout << "Real madrid: € " << limSalResRM << "\n";
-		cout << "Barcelona: € " << limSalResBC << "\n";
-		cout << "Atletico de Madrid: € " << limSalResATL << "\n";
-		cout << "Sevilla: € " << limSalResSV << "\n";
-			
+			//pthread_mutex_unlock(&candado);
+			break;	
 	}
-	
 }
 
-// Lo hago yo
 /**
 *  Esta funcion calcula lo restante del limite salarial de cada equipo
 */
@@ -281,7 +272,7 @@ void Limite_Restante (){
 	long limSalRest;
 	indicesParam misIndices;
 	
-	pthread_mutex_init(&candado,NULL);
+	//pthread_mutex_init(&candado,NULL);
 	for (int i = 0; i<4; i++){
 		misIndices.indiceEquipo = i;
 		for (int j = 0; j<16; j++){
@@ -290,6 +281,12 @@ void Limite_Restante (){
 		}
 	}
 	pthread_mutex_destroy(&candado);
+	
+	cout << "Limite salarial restante de:\n";
+	cout << "Real madrid: € " << limSalResRM << "\n";
+	cout << "Barcelona: € " << limSalResBC << "\n";
+	cout << "Atletico de Madrid: € " << limSalResATL << "\n";
+	cout << "Sevilla: € " << limSalResSV << "\n";
 
 }
 
@@ -384,6 +381,14 @@ void nuevoPresupuesto(){
 }
 
 
+void intercambioJugadores(){
+	cout << "Ingrese el indice del cual vien su jugador: \n";
+	mostrarEquipos();
+	int indiceEquipo;
+	cin >> indiceEquipo;
+	
+	
+}
 /**
 *  En esta funcion se realiza el manejo del menu de equipo
 */
@@ -417,6 +422,7 @@ void manejoEquipos(){
 	}
 }
 
+
 /**
 *  En esta funcion se realiza el manejo de 
 */
@@ -428,9 +434,10 @@ void manejoJugadores(){
 		cin >> opcionMJ;
 		
 		switch ((int)opcionMJ){
-			case 1:// Yo
+			case 1:// Yo La otra aplicacion añadir jugador
 				break;
-			case 2: // Yo
+			case 2: // Yo Cambiar
+				
 				break;
 			case 3:
 				pthread_t tid;
@@ -491,32 +498,7 @@ int main(int nNumberofArgs, char* pszArgs[]) {
 		}
 	}
 
-        /*
-	string nameEquipo;
-	string nameJugador;
-	int presupuesto;
-	int salarioJugador;
-	int salario;
-	int valJugador;
-	int limSalarial;
 
-	cout << "Ingrese el nombre del jugador: ";
-	cin >> nameJugador;
+   cout << endl;
 
-	cout << "Ingrese el salario del jugador: ";
-	cin >> salarioJugador;
-
-	cout << "Ingrese el nuevo presupuesto: ";
-	cin >> presupuesto;
-
-	cout << "Ingrese el nuevo salario del jugador: ";
-	cin >> salario;
-
-	cout << "Ingrese el nombre del equipo: ";
-	cin >> nameEquipo;
-
-	
-        */
-       cout << endl;
-       return 0;
 }
